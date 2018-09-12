@@ -15,6 +15,7 @@ Yellow: #EAFF00
      width: 100%;
      height: fit-content;
      background-color: #101318;
+     /* box-shadow: 0 .125rem .25rem #ff00596e!important; */
  }
  div.nav img {
      width: 120px;
