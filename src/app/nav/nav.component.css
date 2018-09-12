@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 /* Colors
 
 Dark Blue: #101318
@@ -13,6 +11,14 @@ Yellow: #EAFF00
 
  */
 
- body {
+ div.nav {
+     width: 100%;
+     height: fit-content;
      background-color: #101318;
+ }
+ div.nav img {
+     width: 120px;
+ }
+ .navbar-link {
+     color: #01FD86 !important;
  }
