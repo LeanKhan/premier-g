@@ -1,0 +1,38 @@
+/* Colors
+
+Dark Blue: #101318
+Purple: #3B0640
+Red: #FF005B
+Green: #01FD86
+Blue: #05F0FF
+Yellow: #EAFF00
+
+..............
+
+ */
+
+
+ @media screen and (min-width: 768px){
+    div.pages-nav {
+        width: 80%;
+       height: fit-content;
+       background-color: #05F0FF; 
+       color: #101318;
+       /* background: linear-gradient(80deg,#3B0640,#FF005B)!important; */
+       /* margin-top: 20px; */
+    }   
+ }
+
+ @media screen and (max-width: 768px){
+    div.pages-nav {
+        width: 100%;
+       height: 50px;
+       /* background-color: #FF005B !important; */
+       background: linear-gradient(80deg,#3B0640,#FF005B)!important;
+       color: white;
+       overflow: hidden;
+       position: fixed;
+       bottom: 0;
+    }   
+ }
+ 
