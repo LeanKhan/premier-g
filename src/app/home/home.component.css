@@ -35,4 +35,9 @@ Yellow: #EAFF00
        bottom: 0;
     }   
  }
+ @media screen and (min-width: 768px){
+     div.row {
+         width: 80%;
+     }
+ }
  

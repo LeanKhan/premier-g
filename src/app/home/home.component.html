@@ -1,15 +1,24 @@
 <app-nav></app-nav>
 <div class="pages-nav d-flex justify-content-around px-4 align-items-center font-weight-bold mx-auto">
   <a class=" py-2">
-    <i class="far fa-table"></i> Table 
+    <i class="fas fa-table"></i> Table 
   </a>
   <a class="mx-4 py-2">
-    <i class="far fa-calender-check"></i> Fixtures
+    <i class="fas fa-calendar-alt"></i> Fixtures
   </a>
   <a class="mx-4 py-2">
-    <i class="far fa-clock"></i> Recent
+    <i class="fas fa-clock"></i> Recent
   </a>
   <a class=" py-2">
-    <i class="far fa-bolt"></i> Activity
+    <i class="fas fa-bolt"></i> Activity
   </a>
 </div>
+  
+  <!-- Home Row -->
+  <div class="container-fluid m-0 p-0">
+    <div class="row mx-auto">
+      <div class="col-12">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
