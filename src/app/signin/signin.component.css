@@ -17,13 +17,15 @@ div.container-fluid {
 }
  .btn-rounded {
      background-color: #01FD86 !important;
-     color: #011318 !important;
+     color: #101318 !important;
      font-weight: 600 !important;
 
      text-transform: initial;
+     
  }
 .btn-rounded:hover {
-    background-color: #28A745;
+    background-color:  #1DA1F2 !important;
+    color: #ffffff !important;
 }
 
  p.h4 {
