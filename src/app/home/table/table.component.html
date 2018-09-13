@@ -1,0 +1,72 @@
+<div class="table-responsive text-nowrap"> 
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" class="py-3">
+          Pos
+        </th>
+        <th scope="col" class="py-3">
+          Club
+        </th>
+        <th scope="col" class="py-3">
+          P
+        </th>
+        <th scope="col" class="py-3">
+          W
+        </th>
+        <th scope="col" class="py-3">
+          D
+        </th>
+        <th scope="col" class="py-3">
+          L
+        </th>
+        <th scope="col" class="py-3">
+          GF
+        </th>
+        <th scope="col" class="py-3">
+          GA
+        </th>
+        <th scope="col" class="py-3">
+          GD
+        </th>
+        <th scope="col" class="py-3">
+          Pts
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let club of table;index as i"  [class.table-success]="i+1 == '1'" [class.table-secondary]="i+1 > 1 && i+1 < 5" [class.table-danger]="i+1 >= 18">
+        <th scope="row" class="py-2">
+          {{i+1}}
+        </th>
+        <td class="py-2">
+          <span class="mx-2"><img src="../../../assets/img/clubs/{{club.teamid}}.png"></span>{{club.name}}
+        </td>
+        <td class="py-2">
+          {{club.played}}
+        </td>
+        <td class="py-2">
+          {{club.win}}
+        </td>
+        <td class="py-2">
+          {{club.draw}}
+        </td>
+        <td class="py-2">
+          {{club.loss}}
+        </td>
+        <td class="py-2">
+          {{club.goalsfor}}
+        </td>
+        <td class="py-2">
+          {{club.goalsagainst}}
+        </td>
+        <td class="py-2">
+          {{club.goalsdifference}}
+        </td>
+        <td class="py-2">
+            {{club.total}}
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

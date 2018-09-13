@@ -14,8 +14,11 @@ table:any;
 
   ngOnInit() {
     this._dataService.getTable().subscribe((res)=>{
-      this.table = res;
+      this.table = res["table"];
+      console.log(res);
     })
   }
+
+
 
 }

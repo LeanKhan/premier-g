@@ -27,13 +27,16 @@ Yellow: #EAFF00
     div.pages-nav {
         width: 100%;
        height: 50px;
-       /* background-color: #FF005B !important; */
-       background: linear-gradient(80deg,#3B0640,#FF005B)!important;
+       background-color: #05F0FF;
+       /* background: linear-gradient(80deg,#3B0640,#FF005B)!important; */
        color: white;
        overflow: hidden;
        position: fixed;
        bottom: 0;
-    }   
+       right: 0;
+       left: 0;
+       z-index: 1030;
+    }
  }
  @media screen and (min-width: 768px){
      div.row {
