@@ -8,6 +8,7 @@ import { NavComponent } from './nav/nav.component';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
 import { TableComponent } from './home/table/table.component';
+import { FixturesComponent } from './home/fixtures/fixtures.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { TableComponent } from './home/table/table.component';
     SigninComponent,
     HomeComponent,
     TableComponent,
+    FixturesComponent,
   ],
   imports: [
     BrowserModule,
