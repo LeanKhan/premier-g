@@ -19,8 +19,9 @@ Yellow: #EAFF00
        background-color: #05F0FF; 
        color: #101318;
        /* background: linear-gradient(80deg,#3B0640,#FF005B)!important; */
-       /* margin-top: 20px; */
+       margin-top: 49.922px;
     }   
+
  }
 
  @media screen and (max-width: 768px){
@@ -44,3 +45,5 @@ Yellow: #EAFF00
      }
  }
  
+
+ /* 49.922px Margin-Top */
