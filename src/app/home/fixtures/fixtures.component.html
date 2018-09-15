@@ -1,3 +1,33 @@
 <div class="">
-  <h5 class="font-weight-bold">Matchweek {{nextFixtures[0]["intRound"]}}</h5>
+  <div class="d-flex justify-content-between">
+    <h5 class="font-weight-bold">All fixtures for Matchweek {{nextFixtures[0]["intRound"]}}</h5>
+  </div>
+
+  <!-- Fixtures list -->
+  <ul class="list-group table-hover">
+    <li class="list-group-item p-1 mb-1" *ngFor="let fixture of nextFixtures;index as i">
+      <div class="d-flex align-items-center">
+
+        <div class="fixture mr-auto">
+          <span><img src="../../../assets/img/clubs/{{fixture.idHomeTeam}}.png"></span> <span class="mx-2">{{fixture.strHomeTeam}}</span>
+        </div>
+
+        <div class="text-center">
+          <span class="text-center">{{showDate(fixture.dateEvent)}}</span>
+          <h5><span class="rounded-0">{{toLocaleTime(fixture.strTime)}} </span></h5>
+        </div>
+
+        <div class="fixture text-right ml-auto">
+          
+          <span class="mx-2">{{fixture.strAwayTeam}}</span><span><img src="../../../assets/img/clubs/{{fixture.idAwayTeam}}.png"></span> 
+
+        </div>
+
+      </div>
+      <!-- <div class="d-flex justify-content-between">
+        <span>Home</span>
+        <span>Away</span>
+      </div> -->
+    </li>
+  </ul>
 </div>
