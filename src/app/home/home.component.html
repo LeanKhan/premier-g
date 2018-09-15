@@ -1,9 +1,9 @@
 <app-nav class="fixed-top"></app-nav>
 <div class="pages-nav d-flex px-4 align-items-center font-weight-bold mx-auto shadow-sm">
-  <a class="flex-fill py-2 mx-1 text-center">
+  <a class="flex-fill py-2 mx-1 text-center" [class.active]="getThisRoute == 'table'" (click)="goTo('table')">
     <i class="fas fa-table"></i> Table 
   </a>
-  <a class="flex-fill py-2 mx-1 text-center">
+  <a class="flex-fill py-2 mx-1 text-center" [class.active]="getThisRoute == 'fixtures'" (click)="goTo('fixtures')">
     <i class="fas fa-calendar-alt"></i> Fixtures
   </a>
   <a class="flex-fill py-2 mx-1 text-center">
