@@ -4,20 +4,20 @@
   </div>
 
   <!-- Fixtures list -->
-  <ul class="list-group table-hover">
+  <ul class="list-group">
     <li class="list-group-item p-1 mb-1" *ngFor="let fixture of nextFixtures;index as i">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
 
-        <div class="fixture mr-auto">
+        <div class="fixture">
           <span><img src="../../../assets/img/clubs/{{fixture.idHomeTeam}}.png"></span> <span class="mx-2">{{fixture.strHomeTeam}}</span>
         </div>
 
-        <div class="text-center">
+        <div class="text-center match-time">
           <span class="text-center">{{showDate(fixture.dateEvent)}}</span>
           <h5><span class="rounded-0">{{toLocaleTime(fixture.strTime)}} </span></h5>
         </div>
 
-        <div class="fixture text-right ml-auto">
+        <div class="fixture text-right">
           
           <span class="mx-2">{{fixture.strAwayTeam}}</span><span><img src="../../../assets/img/clubs/{{fixture.idAwayTeam}}.png"></span> 
 

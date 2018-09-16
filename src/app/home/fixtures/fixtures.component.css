@@ -13,11 +13,15 @@ Yellow: #EAFF00
 
 div.fixture span img {
      width: 7%;
-     height: auto;
+     height: 7%;
  } 
 
  .fixture {
      font-weight: 600;
+ }
+
+ .match-time {
+     width: -webkit-fill-available;
  }
 
  span.rounded-0 {
@@ -27,4 +31,10 @@ div.fixture span img {
      padding: .25em .4em;
      color: #FFFFFF;
      background-color: #FF005B;
+ }
+
+ @media screen and (min-width: 768px){
+  .match-time {
+      min-width: 400px;
+  }   
  }

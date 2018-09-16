@@ -13,9 +13,18 @@ nextFixtures = [{alive:"I am alive"}];
   constructor(private _dataService:DataService) { }
 
   ngOnInit() {
-    this._dataService.getNextFixtures().subscribe((fixtures)=>{
-      let splicedFixtures = fixtures["events"].splice(0,10);
-      this.nextFixtures = splicedFixtures.sort((a,b)=>{
+
+    // Get the current round. Using that find the particular event.
+
+
+    this._dataService.getNextGeneralFixtures().subscribe((fixtures)=>{
+      let round = fixtures["events"][0].intRound;
+      let nextFixtures;
+     this._dataService.getNextRoundFixtures(round).subscribe((fixtures)=>{
+       this.nextFixtures = fixtures["events"];
+     });
+
+      this.nextFixtures = nextFixtures.sort((a,b)=>{
         if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
           if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
             return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
