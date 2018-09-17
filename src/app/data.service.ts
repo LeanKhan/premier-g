@@ -48,7 +48,7 @@ teams:any = {
   }
 
   // Get Fixtures for current round
-  getNextRoundFixtures(round){
+  getNextRoundFixtures(round:string){
     return this._http.get(`${this.thisRoundsFixturesUri}\&r=${round}\&s=1819`)
   }
 

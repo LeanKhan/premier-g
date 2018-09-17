@@ -8,7 +8,8 @@ import { DataService } from '../../data.service';
 })
 export class FixturesComponent implements OnInit {
 
-nextFixtures = [{alive:"I am alive"}];
+thisGameWeekFixtures = [{alive:"I am alive"}];
+nextGameWeekFixtures = [{alive:"I am alive too!"}];
 
   constructor(private _dataService:DataService) { }
 
@@ -18,13 +19,21 @@ nextFixtures = [{alive:"I am alive"}];
 
 
     this._dataService.getNextGeneralFixtures().subscribe((fixtures)=>{
-      let round = fixtures["events"][0].intRound;
-      let nextFixtures;
+      let round:string = fixtures["events"][0].intRound;
+      let nextRound:string = (parseInt(round) + 1).toString(); 
+      
+      
      this._dataService.getNextRoundFixtures(round).subscribe((fixtures)=>{
-       this.nextFixtures = fixtures["events"];
-     });
+      let thisGameWeek;
+       thisGameWeek = fixtures["events"];
+       thisGameWeek = thisGameWeek.map((fixture)=>{
+         fixture.strLocaleTime = this.toLocaleTime(fixture.strTime);
+         return fixture;
+        });
+        console.log(thisGameWeek)
 
-      this.nextFixtures = nextFixtures.sort((a,b)=>{
+       // Sort fixtures for this week
+      this.thisGameWeekFixtures = thisGameWeek.sort((a,b)=>{
         if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
           if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
             return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
@@ -33,9 +42,35 @@ nextFixtures = [{alive:"I am alive"}];
           }
         }
       });
-    },err=>{console.error(err)},()=>{console.log("Done!")})
+
+      this._dataService.getNextRoundFixtures(nextRound).subscribe((nextfixtures)=>{
+        let nextGameWeek;
+        nextGameWeek = nextfixtures["events"];
+        nextGameWeek = nextGameWeek.map((fixture)=>{
+          fixture.strLocaleTime = this.toLocaleTime(fixture.strTime);
+          return fixture;
+        });
+        console.log(nextGameWeek);
+         // Sort next week fixtures
+         this.nextGameWeekFixtures = nextGameWeek.sort((a,b)=>{
+          if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
+            if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
+              return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
+            }else{
+              return parseInt(a.strDate.split("/")[0]) - parseInt(b.strDate.split("/")[0])
+            }
+          }
+        });
+      }, err=>{console.error(err)}, ()=>{console.log("Done with nextFixtures")});
+  
+
+     });
+     
+  
+    },err=>{console.error(err)},()=>{console.log("Done! totally")})
   }
 
+  // Returns the date of the fixture
  showDate(eventDate:string){
    let now = new Date();
    let dateArray = eventDate.split("-");
@@ -46,10 +81,10 @@ nextFixtures = [{alive:"I am alive"}];
    if(parseInt(fixtureYear) == now.getFullYear()){
      if(parseInt(fixtureMonth) == (now.getMonth()+1)){
        if(parseInt(fixtureDate) == now.getDate()){
-         return "Today at";
+         return "Today";
        }else if(parseInt(fixtureDate) == (now.getDate()+1)){
-         return "Tomorrow at"
-       }else{return eventDate}
+         return "Tomorrow"
+       }else if(parseInt(fixtureDate) == (now.getDate()-1)){return "Yesterday"}else {return eventDate}
      }
    }
 
@@ -60,7 +95,6 @@ nextFixtures = [{alive:"I am alive"}];
 toLocaleTime(eventTime){
   let now = new Date();
   let timezoneOffset = now.getTimezoneOffset();
- 
 
   let realTimeStr = eventTime.split('+')[0].split(':');
     realTimeStr = realTimeStr.splice(0,2);
@@ -68,7 +102,6 @@ toLocaleTime(eventTime){
   realTimeStr[0] = parseInt(realTimeStr[0]) + (timezoneOffset/-60);
 
   return realTimeStr.join(":");
-
 
 }
   
