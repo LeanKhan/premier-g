@@ -8,8 +8,8 @@ import { DataService } from '../../data.service';
 })
 export class FixturesComponent implements OnInit {
 
-thisGameWeekFixtures = [{alive:"I am alive"}];
-nextGameWeekFixtures = [{alive:"I am alive too!"}];
+thisGameWeekFixtures = [{alive:"I am alive"}]; //Placeholder values
+nextGameWeekFixtures = [{alive:"I am alive too!"}]; //Placeholder values
 
   constructor(private _dataService:DataService) { }
 
@@ -30,7 +30,7 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}];
          fixture.strLocaleTime = this.toLocaleTime(fixture.strTime);
          return fixture;
         });
-        console.log(thisGameWeek)
+      
 
        // Sort fixtures for this week
       this.thisGameWeekFixtures = thisGameWeek.sort((a,b)=>{
@@ -50,7 +50,7 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}];
           fixture.strLocaleTime = this.toLocaleTime(fixture.strTime);
           return fixture;
         });
-        console.log(nextGameWeek);
+        
          // Sort next week fixtures
          this.nextGameWeekFixtures = nextGameWeek.sort((a,b)=>{
           if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
@@ -78,17 +78,28 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}];
    let fixtureDate = dateArray[2];
    let fixtureYear = dateArray[0];
 
-   if(parseInt(fixtureYear) == now.getFullYear()){
-     if(parseInt(fixtureMonth) == (now.getMonth()+1)){
-       if(parseInt(fixtureDate) == now.getDate()){
-         return "Today";
-       }else if(parseInt(fixtureDate) == (now.getDate()+1)){
-         return "Tomorrow"
-       }else if(parseInt(fixtureDate) == (now.getDate()-1)){return "Yesterday"}else {return eventDate}
-     }
+   if(parseInt(fixtureYear) == now.getFullYear()){     //Check if the fixture is in the year
+     if(parseInt(fixtureMonth) == (now.getMonth()+1)){ //If so, Check if the fixture is in the present month
+       if(parseInt(fixtureDate) == now.getDate()){     //If in same Year AND same Month, check if in the same Day
+         return "Today"; // If TRUE return 'Today'
+       }else if(parseInt(fixtureDate) == (now.getDate()+1)){ 
+         return "Tomorrow" // If fixture date is the next day, return 'Tomorrow'
+       }else if(parseInt(fixtureDate) == (now.getDate()-1)){return "Yesterday"} //If fixture date was a day less return the 'Yesterday'
+       else {return eventDate} // Otherwise return the event date string
+     } else {return eventDate} //If fixture is not in the same month though, just return the date string
+    
    }
 
  }
+
+//  Test function
+
+hover(e:Event){
+  e.target['children'][0].children[1].lastChild['lastChild'].className = 'rounded-0-hover';
+}
+unHover(e:Event){
+  e.target['children'][0].children[1].lastChild['lastChild'].className = 'rounded-0';
+}
 
 //  Convert eventTime to Locale time
 

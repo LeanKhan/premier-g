@@ -18,23 +18,46 @@ Yellow: #EAFF00
      font-weight: 600 !important;
  }
  table {
-     width: -webkit-fill-available;
+     width: 100%;
      font-size: 1rem;
      font-weight: 500;
+     /* height: -webkit-fill-available; */
  }
+
+ thead, tbody, tr {
+     display: block !important;
+ }
+
 
  table td span img {
      width: 4%;
      height: 4%;
  }
+
+ table tbody {
+     overflow-y: auto;
+     width: 100%;
+     height: 80vh;
+     margin-top: 54px;
+ }
+ #table-header{
+    
+     position:sticky;
+     top: 35px;
+     bottom:0px;
+     margin-top:0px;
+ }
+ #fist{
+    margin-right:40px;
+ }
  
 
- .sticky {
+ /* .sticky {
     top: 0;
     position: fixed;
     width: 100%;
     margin-top: 49.922px;
-}
+} */
 
 .sticky + .pages-nav {
     padding-top: 50px;
