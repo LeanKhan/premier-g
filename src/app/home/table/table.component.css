@@ -1,0 +1,64 @@
+/* Colors
+
+Dark Blue: #101318
+Purple: #3B0640
+Red: #FF005B
+Green: #01FD86
+Blue: #05F0FF
+Yellow: #EAFF00
+
+..............
+
+ */
+
+ table thead.thead-light th {
+     color: #FFFFFF !important;
+     /* color: #FFFFFF; */
+     background-color: #FF005B  !important;
+     font-weight: 600 !important;
+ }
+ table {
+     width: 100%;
+     font-size: 1rem;
+     font-weight: 500;
+     /* height: -webkit-fill-available; */
+ }
+
+ thead, tbody, tr {
+     display: block !important;
+ }
+
+
+ table td span img {
+     width: 4%;
+     height: 4%;
+ }
+
+ table tbody {
+     overflow-y: auto;
+     width: 100%;
+     height: 80vh;
+     margin-top: 54px;
+ }
+ #table-header{
+    
+     position:sticky;
+     top: 35px;
+     bottom:0px;
+     margin-top:0px;
+ }
+ #fist{
+    margin-right:40px;
+ }
+ 
+
+ /* .sticky {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    margin-top: 49.922px;
+} */
+
+.sticky + .pages-nav {
+    padding-top: 50px;
+}

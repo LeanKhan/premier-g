@@ -1,0 +1,57 @@
+/* Colors
+
+Dark Blue: #101318
+Purple: #3B0640
+Red: #FF005B
+Green: #01FD86
+Blue: #05F0FF
+Yellow: #EAFF00
+
+..............
+
+ */
+
+div.fixture span img {
+     width: 7%;
+     height: 7%;
+ } 
+
+ .fixture {
+     font-weight: 600;
+ }
+
+ .match-time {
+     width: -webkit-fill-available;
+ }
+
+ span.rounded-0 {
+     display: inline-block;
+     font-size: 75%;
+     text-align: center;
+     padding: .25em .4em;
+     color: #FFFFFF;
+     background-color: #FF005B;
+ }
+ span.rounded-0-hover {
+    display: inline-block;
+    font-size: 75%;
+    text-align: center;
+    padding: .25em .4em;
+    color: #FF005B;
+    background-color: #FFFFFF;
+    font-weight: bold;
+}
+
+ @media screen and (min-width: 768px){
+  .match-time {
+      min-width: 400px;
+  }   
+  ul.fixtures-list-group li.list-group-item {
+      cursor: pointer;
+  }
+ ul.fixtures-list-group li.list-group-item:hover {
+   background-color: #FF005B;
+   color: #FFFFFF;
+   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+ }
