@@ -39,7 +39,6 @@ awayRecentMatches;
         position["pos"] = i+1;
         return position;
       });
-      console.log(this.table)
 
     })
 
@@ -74,13 +73,13 @@ awayRecentMatches;
          // Sort next week fixtures
          this.nextGameWeekFixtures = nextGameWeek.sort(this.sortFixtures);
         
-      }, err=>{console.error(err)}, ()=>{console.log("Done with nextFixtures",)});
+      }, err=>{console.error(err)});
   
 
      });
      
   
-    },err=>{console.error(err)},()=>{console.log("Next fixtures", )})
+    },err=>{console.error(err)});
   }
 
   // Highter order function for sorting fixtures
@@ -100,6 +99,12 @@ sortFixtures(a,b){
 
   haveBeenPlayed(fixture){
     return fixture.intHomeScore != null;
+  }
+
+  // Higher order function to filter-out fixtures that are not in the EPL
+
+  inEpl(fixture){
+    return fixture.idLeague == "4328";
   }
 
   // Returns the date of the fixture
@@ -168,6 +173,14 @@ getLastMeetings(home:string, away:string, num:number){
     let recent = res["event"].filter(this.haveBeenPlayed).sort(this.sortFixtures);
 
     this.selectedFixture = recent.splice((recent.length-num),num)[0];
+
+    this._dataService.getTeamRecentMatches(this.selectedFixture["idHomeTeam"]).subscribe((res)=>{
+      this.homeRecentMatches = res["results"].filter(this.inEpl);
+    });
+
+    this._dataService.getTeamRecentMatches(this.selectedFixture["idAwayTeam"]).subscribe((res)=>{
+      this.awayRecentMatches = res["results"].filter(this.inEpl);
+    });
     
     }, e=>console.error(e), ()=>{this.collapseSpinner = !this.collapseSpinner});
   

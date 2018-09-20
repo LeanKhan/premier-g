@@ -19,6 +19,10 @@ div.fixture span img {
      width: 7%;
      height: 7%;
  } 
+span.fixture-img img {
+    width: 23px;
+    height: 23px;
+}
  table tr td span img {
      width: auto;
      height: 3.4%;
@@ -47,6 +51,12 @@ table thead {
 div.positions table {
     width: 100%;
     width: -webkit-fill-available;
+}
+
+div.positions table:hover {
+    border-color: #FF005B;
+    /* font-weight: bold; */
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
 .positions {
     margin-top: .5rem;
@@ -86,10 +96,11 @@ div.positions table {
   ul.fixtures-list-group li.list-group-item {
       cursor: pointer;
       transition: all .2s;
+      font-weight: 600;
   }
  ul.fixtures-list-group li.list-group-item:hover {
    border-color: #FF005B;
-   font-weight: bold;
+   /* font-weight: bold; */
    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
  }
