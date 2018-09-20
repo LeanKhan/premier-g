@@ -10,10 +10,38 @@ export class FixturesComponent implements OnInit {
 
 thisGameWeekFixtures = [{alive:"I am alive"}]; //Placeholder values
 nextGameWeekFixtures = [{alive:"I am alive too!"}]; //Placeholder values
+selectedFixture = {intAwayScore: "Score goes here..."};
+collapseSpinner;
+table:any;
+teamPositions;
+homeRecentMatches;
+awayRecentMatches;
 
   constructor(private _dataService:DataService) { }
 
   ngOnInit() {
+
+    // Get league table
+    this._dataService.getTable().subscribe((res)=>{
+  
+      this.table = res["table"].sort((a,b)=>{ //Sort the array according to goalsdifference, points, goals for
+        if(b.total == a.total){ //If both teams have the same points sort them based on goal diff
+          if(b.goalsdifference == a.goalsdifference){ //If both teams also have the same goal diff, sort based on goals scored
+            return b.goalsfor - a.goalsfor
+          }else{
+            return b.goalsdifference - a.goalsdifference
+          }
+        }else{
+          return b.total - a.total
+        }
+      });
+      this.table = this.table.map((position, i)=>{
+        position["pos"] = i+1;
+        return position;
+      });
+      console.log(this.table)
+
+    })
 
     // Get the current round. Using that find the particular event.
 
@@ -33,15 +61,7 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}]; //Placeholder values
       
 
        // Sort fixtures for this week
-      this.thisGameWeekFixtures = thisGameWeek.sort((a,b)=>{
-        if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
-          if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
-            return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
-          }else{
-            return parseInt(a.strDate.split("/")[0]) - parseInt(b.strDate.split("/")[0])
-          }
-        }
-      });
+      this.thisGameWeekFixtures = thisGameWeek.sort(this.sortFixtures);
 
       this._dataService.getNextRoundFixtures(nextRound).subscribe((nextfixtures)=>{
         let nextGameWeek;
@@ -52,22 +72,34 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}]; //Placeholder values
         });
         
          // Sort next week fixtures
-         this.nextGameWeekFixtures = nextGameWeek.sort((a,b)=>{
-          if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
-            if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
-              return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
-            }else{
-              return parseInt(a.strDate.split("/")[0]) - parseInt(b.strDate.split("/")[0])
-            }
-          }
-        });
-      }, err=>{console.error(err)}, ()=>{console.log("Done with nextFixtures")});
+         this.nextGameWeekFixtures = nextGameWeek.sort(this.sortFixtures);
+        
+      }, err=>{console.error(err)}, ()=>{console.log("Done with nextFixtures",)});
   
 
      });
      
   
-    },err=>{console.error(err)},()=>{console.log("Done! totally")})
+    },err=>{console.error(err)},()=>{console.log("Next fixtures", )})
+  }
+
+  // Highter order function for sorting fixtures
+sortFixtures(a,b){
+  if(parseInt(a.strDate.split("/")[2]) == parseInt(b.strDate.split("/")[2])){ // Check if they are in the same year
+    if(parseInt(a.strDate.split("/")[1]) == parseInt(b.strDate.split("/")[1])){ // Check if both fixtures have same month
+      if(parseInt(a.strDate.split("/")[0]) == parseInt(b.strDate.split("/")[0])){ // Check if both fixtures have the same day
+        return parseInt(a.strTime) - parseInt(b.strTime); //If both fixtures have same month and day sort by time
+      }
+  }else{
+        return parseInt(a.strDate.split("/")[1]) - parseInt(b.strDate.split("/")[1])
+      }
+    }else{ return parseInt(a.strDate.split("/")[2]) - parseInt(b.strDate.split("/")[2])}
+  }
+
+  // Higher order function to filter-out fixtures that have not been played
+
+  haveBeenPlayed(fixture){
+    return fixture.intHomeScore != null;
   }
 
   // Returns the date of the fixture
@@ -92,14 +124,20 @@ nextGameWeekFixtures = [{alive:"I am alive too!"}]; //Placeholder values
 
  }
 
-//  Test function
+// Set background image
+  // setBackgroundImage(e:Event, homeTeamId, awayTeamId){
+  //   let hit = e["target"];
 
-hover(e:Event){
-  e.target['children'][0].children[1].lastChild['lastChild'].className = 'rounded-0-hover';
-}
-unHover(e:Event){
-  e.target['children'][0].children[1].lastChild['lastChild'].className = 'rounded-0';
-}
+  //   if(hit["localName"] === 'li'){
+  //     hit["lastElementChild"].firstElementChild["firstElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${homeTeamId}.png)`;
+  //     hit["lastElementChild"].firstElementChild["lastElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${awayTeamId}.png)`;
+  //     console.log(hit);
+  //   }else{
+  //     hit["offsetParent"].lastElementChild.firstElementChild["firstElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${homeTeamId}.png)`;
+  //     hit["offsetParent"].lastElementChild.firstElementChild["lastElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${awayTeamId}.png)`;
+  //     console.log(hit);
+  //   }
+  // }
 
 //  Convert eventTime to Locale time
 
@@ -115,5 +153,30 @@ toLocaleTime(eventTime){
   return realTimeStr.join(":");
 
 }
+
+
+
+
+// Get last meetings
+getLastMeetings(home:string, away:string, num:number){
+  if(this.selectedFixture["strHomeTeam"] != home && this.selectedFixture["strAwayTeam"] != away ){
+
+    this.collapseSpinner = true;
+
+    this._dataService.getLastMeetings(home,away).subscribe((res)=>{
+
+    let recent = res["event"].filter(this.haveBeenPlayed).sort(this.sortFixtures);
+
+    this.selectedFixture = recent.splice((recent.length-num),num)[0];
+    
+    }, e=>console.error(e), ()=>{this.collapseSpinner = !this.collapseSpinner});
   
+  };
+
+ this.teamPositions = this.table.filter((position)=>{
+   return position["name"] == home || position["name"] == away;
+ });
+
+}
+
 }

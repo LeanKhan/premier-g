@@ -11,10 +11,46 @@ Yellow: #EAFF00
 
  */
 
+h6.text-muted {
+    color: #3B0640 !important;
+}
+
 div.fixture span img {
      width: 7%;
      height: 7%;
  } 
+ table tr td span img {
+     width: auto;
+     height: 3.4%;
+ }
+ table tr {
+     border-bottom-left-radius: .125rem;
+     border-bottom-right-radius: .125rem;
+     border: 1px solid rgba(0,0,0,.125);
+     margin-bottom: 0px;
+     padding: .45rem .75rem;
+ }
+ table tr td.club {
+    text-align: left;
+    font-weight: 600;
+}
+table tr td {
+    padding: .25rem !important;
+}
+table thead tr th.club {
+  text-align: left;
+}
+table thead {
+    color: #ffffff !important;
+    background-color: #101318 !important;
+}
+div.positions table {
+    width: 100%;
+    width: -webkit-fill-available;
+}
+.positions {
+    margin-top: .5rem;
+}
 
  .fixture {
      font-weight: 600;
@@ -22,6 +58,7 @@ div.fixture span img {
 
  .match-time {
      width: -webkit-fill-available;
+     width: 100%;
  }
 
  span.rounded-0 {
@@ -48,10 +85,38 @@ div.fixture span img {
   }   
   ul.fixtures-list-group li.list-group-item {
       cursor: pointer;
+      transition: all .2s;
   }
  ul.fixtures-list-group li.list-group-item:hover {
-   background-color: #FF005B;
-   color: #FFFFFF;
+   border-color: #FF005B;
+   font-weight: bold;
    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
  }
+
+div.collapse.container .row .card {
+    background-repeat: no-repeat;
+    background-color: #FFFFFF;
+    background-size: 30%;
+    background-position: 100% 0%;
+    position: relative;
+}
+
+.spinner h1 {
+    color: #FF005B;
+}
+
+/* Background image for collapsible content columns */
+div.collapsible-row div.col-4.home {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
+    /* background-color: #05F0FF; */
+}
+
+div.collapsible-row div.col-4.away {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    /* background-color: #05F0FF; */
+}
