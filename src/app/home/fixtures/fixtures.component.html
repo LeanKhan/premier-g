@@ -1,4 +1,12 @@
+  
+  <div class="row spinner" *ngIf="!thisGameWeekFixtures[0]['intRound']">
 
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <h1 style="font-size: 100px"><i class="fas fa-spinner fa-spin"></i></h1>
+      </div>
+
+  </div>
+    
 <div>
 
   <!-- This gameweek list Title -->
@@ -57,21 +65,28 @@
          <div class="row collapsible-row" *ngIf="!collapseSpinner">
 
            <!-- Home team Recent Matches START  -->
-          <div class="col-4 home text-center border-right">
+          <div class="col-4 home text-center">
       
-            <h6 class="text-muted">{{fixture?.strHomeTeam}} Recent matches</h6>
+            <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
 
-            <ul class="list-group">
+            <div class="recent-matches" *ngFor="let lastMatch of homeRecentMatches">
 
-                <li class="list-group-item p-2" *ngFor="let lastMatch of homeRecentMatches">
-                  
+              <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+
+              <ul class="list-group">
+
+                <li class="list-group-item p-2">
+                      
                   <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
                   <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
                   <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
-                  
+                      
                 </li>
-
+    
               </ul>
+
+            </div>
+
           </div>
           <!--  Home team Recent Matches END -->
 
@@ -98,10 +113,12 @@
 
             </div> 
 
+            <!-- Positions // Comparing league positions // START -->
             <div class="positions">
 
             <h6 class="text-muted">League Position</h6>
             
+            <!-- League Position Table START -->
              <table>
                <thead>
                  <tr>
@@ -129,28 +146,36 @@
                   </tr>
                </tbody>
              </table>
+             <!-- League Position Table END -->
 
             </div>
+            <!-- Positions END -->
             
           </div>
           <!-- Last Meeting END -->
 
           <!-- Away team Recent Matches START -->
-          <div class="col-4 away text-center border-left">
+          <div class="col-4 away text-center">
 
-            <h6 class="text-muted">{{fixture?.strAwayTeam}} Recent matches</h6>
+            <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
 
-            <ul class="list-group">
+            <div class="recent-matches" *ngFor="let lastMatch of awayRecentMatches">
 
-                <li class="list-group-item p-2" *ngFor="let lastMatch of awayRecentMatches">
-                  
-                  <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
-                  <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
-                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
-                  
-                </li>
-
-              </ul>
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+              </div>
 
           </div>
           <!-- Away team Recent Matches END -->
@@ -220,21 +245,27 @@
         <div class="row collapsible-row" *ngIf="!collapseSpinner">
 
           <!-- Home team recent matches START -->
-          <div class="col-4 home text-center border-right">
+          <div class="col-4 home text-center ">
 
             <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
             
-            <ul class="list-group">
+            <div class="recent-matches" *ngFor="let lastMatch of homeRecentMatches">
 
-                <li class="list-group-item p-2" *ngFor="let lastMatch of homeRecentMatches">
-                  
-                  <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
-                  <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
-                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
-                  
-                </li>
-
-            </ul>
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+            </div>
 
           </div>
           <!-- Home team recent matches END -->
@@ -301,21 +332,27 @@
           <!-- Last Meeting END -->
 
           <!-- Away team recent matches START -->
-          <div class="col-4 away text-center border-left">
+          <div class="col-4 away text-center">
           
-            <h6 class="text-muted">{{fixture?.strAwayTeam}} Recent matches</h6>
+            <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
 
-            <ul class="list-group">
+            <div class="recent-matches" *ngFor="let lastMatch of awayRecentMatches">
 
-                <li class="list-group-item p-2" *ngFor="let lastMatch of awayRecentMatches">
-                  
-                  <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
-                  <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
-                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
-                  
-                </li>
-
-              </ul>
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+            </div>
 
           </div>
           <!-- Away team  recent matches END -->

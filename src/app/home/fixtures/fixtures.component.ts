@@ -129,21 +129,6 @@ sortFixtures(a,b){
 
  }
 
-// Set background image
-  // setBackgroundImage(e:Event, homeTeamId, awayTeamId){
-  //   let hit = e["target"];
-
-  //   if(hit["localName"] === 'li'){
-  //     hit["lastElementChild"].firstElementChild["firstElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${homeTeamId}.png)`;
-  //     hit["lastElementChild"].firstElementChild["lastElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${awayTeamId}.png)`;
-  //     console.log(hit);
-  //   }else{
-  //     hit["offsetParent"].lastElementChild.firstElementChild["firstElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${homeTeamId}.png)`;
-  //     hit["offsetParent"].lastElementChild.firstElementChild["lastElementChild"].style.backgroundImage = `url(../../../assets/img/clubs/${awayTeamId}.png)`;
-  //     console.log(hit);
-  //   }
-  // }
-
 //  Convert eventTime to Locale time
 
 toLocaleTime(eventTime){
@@ -175,14 +160,14 @@ getLastMeetings(home:string, away:string, num:number){
     this.selectedFixture = recent.splice((recent.length-num),num)[0];
 
     this._dataService.getTeamRecentMatches(this.selectedFixture["idHomeTeam"]).subscribe((res)=>{
-      this.homeRecentMatches = res["results"].filter(this.inEpl);
-    });
+      this.homeRecentMatches = res["results"].filter(this.inEpl).splice(0,4);
+    }, e=> console.error(e));
 
     this._dataService.getTeamRecentMatches(this.selectedFixture["idAwayTeam"]).subscribe((res)=>{
-      this.awayRecentMatches = res["results"].filter(this.inEpl);
-    });
+      this.awayRecentMatches = res["results"].filter(this.inEpl).splice(0,4);
+    }, e=>{console.error(e)}, ()=>{this.collapseSpinner = !this.collapseSpinner});
     
-    }, e=>console.error(e), ()=>{this.collapseSpinner = !this.collapseSpinner});
+    }, e=>console.error(e));
   
   };
 
