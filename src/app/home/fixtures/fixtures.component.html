@@ -10,7 +10,7 @@
 <div>
 
   <!-- This gameweek list Title -->
-  <div class="d-flex justify-content-between my-2" *ngIf="thisGameWeekFixtures[0]['intRound']">
+  <div class="d-flex justify-content-between my-2 fixtures-title" *ngIf="thisGameWeekFixtures[0]['intRound']">
     <h5 class="font-weight-bold">All fixtures for Matchweek {{thisGameWeekFixtures[0]["intRound"]}}</h5>
   </div>
   <!-- This gameweek list Title -->
@@ -65,7 +65,7 @@
          <div class="row collapsible-row" *ngIf="!collapseSpinner">
 
            <!-- Home team Recent Matches START  -->
-          <div class="col-4 home text-center">
+          <div class="col-md-4 col-sm-12 home text-center">
       
             <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
 
@@ -91,7 +91,7 @@
           <!--  Home team Recent Matches END -->
 
           <!-- Last Meeting START -->
-          <div class="col-4 h-to-h text-center">
+          <div class="col-md-4 col-sm-12 h-to-h text-center">
 
             <h6 class="text-muted">Last Meeting</h6>
 
@@ -155,7 +155,7 @@
           <!-- Last Meeting END -->
 
           <!-- Away team Recent Matches START -->
-          <div class="col-4 away text-center">
+          <div class="col-md-4 col-sm-12 away text-center">
 
             <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
 
@@ -245,7 +245,7 @@
         <div class="row collapsible-row" *ngIf="!collapseSpinner">
 
           <!-- Home team recent matches START -->
-          <div class="col-4 home text-center ">
+          <div class="col-md-4 col-sm-12 home text-center ">
 
             <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
             
@@ -271,7 +271,7 @@
           <!-- Home team recent matches END -->
 
           <!-- Last Meeting START -->
-          <div class="col-4 h-to-h text-center">
+          <div class="col-md-4 col-sm-12 h-to-h text-center">
 
             <h6 class="text-muted">Last Meeting </h6>
 
@@ -332,7 +332,7 @@
           <!-- Last Meeting END -->
 
           <!-- Away team recent matches START -->
-          <div class="col-4 away text-center">
+          <div class="col-md-4 col-sm-12 away text-center">
           
             <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
 

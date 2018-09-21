@@ -140,3 +140,12 @@ div.collapsible-row div.col-4.away {
 .recent-matches p {
     margin-bottom: 0;
 }
+
+/* Media queries */
+
+@media screen and (max-width: 768px){
+    .fixtures-title {
+        margin-top: 2rem !important;
+
+    }
+}

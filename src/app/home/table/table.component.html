@@ -1,17 +1,49 @@
 <div class="table-responsive text-nowrap"> 
   <table class="table table-hover">
-    <div class="header">
-      <span class="lit" id="pos">Pos</span>
-      <span class="lit" id="c">Club</span>
-      <span class="lit" id="p">P</span>
-      <span class="lit" id="w">W</span>
-      <span class="lit" id="d">D</span>
-      <span class="lit" id="l">L</span>
-      <span class="lit" id="gf">GF</span>
-      <span class="lit" id="ga">GA</span>
-      <span class="lit" id="gd">GD</span>
-      <span class="lit" id="pts">Pts</span>
-    </div>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" class="py-3">
+          Pos
+        </th>
+        <th scope="col" class="py-3">
+          Club
+        </th>
+        <th scope="col" class="py-3">
+          P
+        </th>
+        <th scope="col" class="py-3">
+          W
+        </th>
+        <th scope="col" class="py-3">
+          D
+        </th>
+        <th scope="col" class="py-3">
+          L
+        </th>
+        <th scope="col" class="py-3">
+          GF
+        </th>
+        <th scope="col" class="py-3">
+          GA
+        </th>
+        <th scope="col" class="py-3">
+          GD
+        </th>
+        <th scope="col" class="py-3">
+          Pts
+        </th>
+      </tr>
+    </thead>
+    <!-- Load Spinner START -->
+    <tr class="row spinner" [class.show]="!table[0]" [class.hide]="table[0]">
+
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <h1 style="font-size: 100px"><i class="fas fa-spinner fa-spin"></i></h1>
+      </div>
+
+    </tr>
+
+  <!-- Load Spinner END -->
     <tbody>
       <tr *ngFor="let club of table;index as i"  [class.table-success]="i+1 == '1'" [class.table-secondary]="i+1 > 1 && i+1 < 5" [class.table-danger]="i+1 >= 18">
         <th scope="row" class="py-2">

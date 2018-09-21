@@ -24,10 +24,18 @@ Yellow: #EAFF00
      /* height: -webkit-fill-available; */
  }
 
- thead, tbody, tr {
+ /* thead, tbody,thead, tr {
      display: block !important;
- }
-
+ } */
+ .spinner h1 {
+    color: #05F0FF;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
 
  table td span img {
      width: 4%;
@@ -45,12 +53,6 @@ Yellow: #EAFF00
     background-color: #FF005B;
     height:50px;
     top:40;
-}
-.lit{
-    margin: 20px;
-}
-#c{
-  margin-right:50px;
 }
  
 
