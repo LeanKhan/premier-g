@@ -9,6 +9,8 @@ export class DataService {
 leagueTableUri = 'https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4328&s=1819';
 nextFixturesUri = 'https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4328';
 thisRoundsFixturesUri = 'https://www.thesportsdb.com/api/v1/json/1/eventsround.php?id=4328'; 
+headToHeadUri = 'https://www.thesportsdb.com/api/v1/json/1/searchevents.php?';
+teamLastEventsUri = 'https://www.thesportsdb.com/api/v1/json/1/eventslast.php?';
 
 teams:any = {
   133604 : "ARS",
@@ -52,6 +54,15 @@ teams:any = {
     return this._http.get(`${this.thisRoundsFixturesUri}\&r=${round}\&s=1819`)
   }
 
+  // Get last events for two clubs
+
+  getLastMeetings(home:String, away:String){
+   return this._http.get(`${this.headToHeadUri}e=${home}_vs_${away}`);
+  }
+
+  getTeamRecentMatches(id){
+    return this._http.get(`${this.teamLastEventsUri}id=${id}`);
+  }
 
 
 }

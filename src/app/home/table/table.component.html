@@ -1,11 +1,11 @@
 <div class="table-responsive text-nowrap"> 
   <table class="table table-hover">
-    <thead class="thead-light" id="table-header">
+    <thead class="thead-light">
       <tr>
         <th scope="col" class="py-3">
           Pos
         </th>
-        <th scope="col" class="py-3" style="margin-right:100px;">
+        <th scope="col" class="py-3">
           Club
         </th>
         <th scope="col" class="py-3">
@@ -34,6 +34,16 @@
         </th>
       </tr>
     </thead>
+    <!-- Load Spinner START -->
+    <tr class="row spinner" [class.show]="!table[0]" [class.hide]="table[0]">
+
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <h1 style="font-size: 100px"><i class="fas fa-spinner fa-spin"></i></h1>
+      </div>
+
+    </tr>
+
+  <!-- Load Spinner END -->
     <tbody>
       <tr *ngFor="let club of table;index as i"  [class.table-success]="i+1 == '1'" [class.table-secondary]="i+1 > 1 && i+1 < 5" [class.table-danger]="i+1 >= 18">
         <th scope="row" class="py-2">

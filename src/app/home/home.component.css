@@ -11,6 +11,9 @@ Yellow: #EAFF00
 
  */
 
+ .active {
+    color: #FF005B !important;
+}
 
  @media screen and (min-width: 768px){
     div.pages-nav {
@@ -22,12 +25,11 @@ Yellow: #EAFF00
        margin-top: 49.922px;
     }   
 
-    .active {
-        color: #FF005B !important;
-    }
+    
 
     div.pages-nav a.flex-fill {
         -webkit-animation: color 1s;
+        animation: color 1s;;
     }
 
     div.pages-nav a.flex-fill:hover {
@@ -49,6 +51,21 @@ Yellow: #EAFF00
        right: 0;
        left: 0;
        z-index: 1030;
+    }
+    div.pages-nav a.flex-fill {
+        -webkit-animation: color 1s;
+        animation: color 1s;
+        transition: all .2s;
+    }
+
+    div.pages-nav a.flex-fill:active {
+        color: #FF005B;
+    }
+    .container-fluid {
+        margin-top: 20px !important;
+        margin-bottom: 100px !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 
  }

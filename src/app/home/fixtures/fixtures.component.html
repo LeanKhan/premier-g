@@ -1,73 +1,371 @@
-<div class="">
-  <div class="d-flex justify-content-between my-2">
-    <h5 class="font-weight-bold">All fixtures for Matchweek {{thisGameWeekFixtures[0]["intRound"]}}</h5> 
-    <!-- <button class="btn btn-sm btn-flat btn-warning" (click)="show($event)">There is no try</button> -->
+  
+  <div class="row spinner" *ngIf="!thisGameWeekFixtures[0]['intRound']">
+
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <h1 style="font-size: 100px"><i class="fas fa-spinner fa-spin"></i></h1>
+      </div>
+
   </div>
+    
+<div>
 
-  <!-- This gameweek fixtures list -->
-  <ul class="list-group fixtures-list-group" *ngIf="thisGameWeekFixtures">
-    <li class="list-group-item p-1 mb-1" *ngFor="let fixture of thisGameWeekFixtures;index as i" type="button" data-toggle="collapse" [attr.data-target]=" '#' + fixture.idEvent" aria-expanded="false" [attr.aria-controls]="fixture.idEvent" (mouseenter)="hover($event)" (mouseleave)="unHover($event)">
+  <!-- This gameweek list Title -->
+  <div class="d-flex justify-content-between my-2 fixtures-title" *ngIf="thisGameWeekFixtures[0]['intRound']">
+    <h5 class="font-weight-bold">All fixtures for Matchweek {{thisGameWeekFixtures[0]["intRound"]}}</h5>
+  </div>
+  <!-- This gameweek list Title -->
+
+  <!-- This gameweek fixtures list START-->
+  <ul class="list-group fixtures-list-group" *ngIf="thisGameWeekFixtures[2]" id="accordion1">
+
+    <li class="list-group-item p-1 mb-1 accordion-group" *ngFor="let fixture of thisGameWeekFixtures;index as i" type="button" data-toggle="collapse" [attr.data-target]=" '#' + fixture.idEvent" aria-expanded="false" [attr.aria-controls]="fixture.idEvent" 
+    (click)="getLastMeetings(fixture.strHomeTeam,fixture.strAwayTeam,1)">
+      
+      <!-- Fixture details START -->
       <div class="d-flex align-items-center justify-content-between">
-
+        
+        <!-- Home team -->
         <div class="fixture">
           <span><img src="../../../assets/img/clubs/{{fixture.idHomeTeam}}.png"></span> <span class="mx-2">{{fixture.strHomeTeam}}</span>
         </div>
+        <!-- Home team -->
 
+        <!-- Fixture time and/or score -->
         <div class="text-center match-time">
-          <span class="text-center">{{showDate(fixture.dateEvent)}}</span>
+          <span class="text-center">{{showDate(fixture?.dateEvent)}}</span>
           <h5><span class="rounded-0" *ngIf="fixture.intHomeScore != null">{{fixture?.intHomeScore}}-{{fixture?.intAwayScore}}</span></h5>
           <h5><span class="rounded-0" *ngIf="fixture.intHomeScore == null">{{fixture?.strLocaleTime}} </span></h5>
         </div>
+        <!-- Fixture time and/or score -->
 
-        <div class="fixture text-right">
-          
+        <!-- Away team -->
+        <div class="fixture text-right">          
           <span class="mx-2">{{fixture.strAwayTeam}}</span><span><img src="../../../assets/img/clubs/{{fixture.idAwayTeam}}.png"></span> 
-
         </div>
-
+        <!-- Away team -->
 
       </div>
-      <div class="collapse" id="{{fixture.idEvent}}">
-          Collapasible for file name = {{fixture.strFilename}}
-        </div>
-      <!-- <div class="d-flex justify-content-between">
-        <span>Home</span>
-        <span>Away</span>
-      </div> -->
-    </li>
-  </ul>
+      <!-- Fixture details END -->
 
-  <div class="d-flex justify-content-between my-2">
+      <!-- Collapsible content START-->
+      <div class="collapse container my-4" id="{{fixture.idEvent}}" data-parent="#accordion1">
+
+          <!-- Spinner START-->
+          <div class="row spinner" *ngIf="collapseSpinner">
+
+            <div class="col-12 d-flex justify-content-center align-items-center">
+              <h1><i class="fas fa-spinner fa-spin"></i></h1>
+            </div>
+
+          </div>
+          <!-- Spinner END -->
+           
+
+         <!-- Collapsible details START -->
+         <div class="row collapsible-row" *ngIf="!collapseSpinner">
+
+           <!-- Home team Recent Matches START  -->
+          <div class="col-md-4 col-sm-12 home text-center">
+      
+            <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
+
+            <div class="recent-matches" *ngFor="let lastMatch of homeRecentMatches">
+
+              <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+
+              <ul class="list-group">
+
+                <li class="list-group-item p-2">
+                      
+                  <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                  <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                      
+                </li>
+    
+              </ul>
+
+            </div>
+
+          </div>
+          <!--  Home team Recent Matches END -->
+
+          <!-- Last Meeting START -->
+          <div class="col-md-4 col-sm-12 h-to-h text-center">
+
+            <h6 class="text-muted">Last Meeting</h6>
+
+            <span class="text-muted small">{{selectedFixture?.dateEvent}}</span>
+
+            <div class="match">
+
+              <ul class="list-group">
+
+                <li class="list-group-item p-2">
+
+                  <span class="mx-2">{{_dataService.teams[fixture.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{selectedFixture?.idHomeTeam}}.png"></span> <!-- Home teams Short name-->
+                  <span class="rounded-0 mx-4">{{selectedFixture?.intHomeScore}}-{{selectedFixture?.intAwayScore}}</span> <!-- Their scores-->
+                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{selectedFixture?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[fixture.idAwayTeam]}}</span> <!-- Away teams short name-->
+
+                </li>
+
+              </ul>
+
+            </div> 
+
+            <!-- Positions // Comparing league positions // START -->
+            <div class="positions">
+
+            <h6 class="text-muted">League Position</h6>
+            
+            <!-- League Position Table START -->
+             <table>
+               <thead>
+                 <tr>
+                   <th>Pos</th>
+                   <th class="club">Club</th>
+                   <th>Pl</th>
+                   <th>GD</th>
+                   <th>Pts</th>
+                 </tr>
+               </thead>
+               <tbody *ngIf="teamPositions">
+                 <tr>
+                   <td>{{teamPositions[0].pos}}</td>
+                   <td class="club"><span><img src="../../../assets/img/clubs/{{teamPositions[0].teamid}}.png"></span> {{_dataService.teams[teamPositions[0].teamid]}}</td>
+                   <td>{{teamPositions[0].played}}</td>
+                   <td>{{teamPositions[0].goalsdifference}}</td>
+                   <td>{{teamPositions[0].total}} </td>
+                 </tr>
+                 <tr>
+                    <td>{{teamPositions[1].pos}}</td>
+                    <td class="club"><span><img src="../../../assets/img/clubs/{{teamPositions[1].teamid}}.png"></span> {{_dataService.teams[teamPositions[1].teamid]}}</td>
+                    <td>{{teamPositions[1].played}}</td>
+                    <td>{{teamPositions[1].goalsdifference}}</td>
+                    <td>{{teamPositions[1].total}} </td>
+                  </tr>
+               </tbody>
+             </table>
+             <!-- League Position Table END -->
+
+            </div>
+            <!-- Positions END -->
+            
+          </div>
+          <!-- Last Meeting END -->
+
+          <!-- Away team Recent Matches START -->
+          <div class="col-md-4 col-sm-12 away text-center">
+
+            <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
+
+            <div class="recent-matches" *ngFor="let lastMatch of awayRecentMatches">
+
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+              </div>
+
+          </div>
+          <!-- Away team Recent Matches END -->
+
+         </div>
+         <!-- Collapsible details END -->
+
+      </div>
+      <!-- Collapsible content END -->
+    
+    </li>
+   
+  </ul>
+   <!-- This gameweek fixtures list END -->
+
+   <!-- Next gameweek list Title -->
+  <div class="d-flex justify-content-between my-2" *ngIf="thisGameWeekFixtures[0]['intRound']">
     <h5 class="font-weight-bold">All fixtures for Matchweek {{nextGameWeekFixtures[0]["intRound"]}}</h5>
   </div>
+  <!-- Next gameweek list Title -->
 
-  <!-- Next gameweek fixtures list -->
-  <ul class="list-group">
-    <li class="list-group-item p-1 mb-1" *ngFor="let fixture of nextGameWeekFixtures;index as i" >
+  <!-- Next gameweek fixtures list START-->
+  <ul class="list-group fixtures-list-group" *ngIf="nextGameWeekFixtures[2]" id="accordion2">
+
+    <li class="list-group-item p-1 mb-1 accordion-group" *ngFor="let fixture of nextGameWeekFixtures;index as i"type="button" data-toggle="collapse" [attr.data-target]=" '#' + fixture.idEvent" aria-expanded="false" [attr.aria-controls]="fixture.idEvent"
+      (click)="getLastMeetings(fixture.strHomeTeam,fixture.strAwayTeam,1)" >
+      <!-- Fixture details START -->
       <div class="d-flex align-items-center justify-content-between">
 
+        <!-- Home team -->
         <div class="fixture">
           <span><img src="../../../assets/img/clubs/{{fixture.idHomeTeam}}.png"></span> <span class="mx-2">{{fixture.strHomeTeam}}</span>
         </div>
+        <!-- Home team -->
 
+        <!-- Fixture time and/or score -->
         <div class="text-center match-time">
-          <span class="text-center">{{showDate(fixture.dateEvent)}}</span>
-          <h5><span class="rounded-0" *ngIf="fixture.intHomeScore != null">{{fixture?.intHomeScore}}-{{fixture?.intAwayScore}}</span></h5>
-          <h5><span class="rounded-0" *ngIf="fixture.intHomeScore == null">{{fixture?.strLocaleTime}} </span></h5>
+          <span class="text-center">{{showDate(fixture?.dateEvent)}}</span>
+          <h5><span class="rounded-0" *ngIf="fixture?.intHomeScore != null">{{fixture?.intHomeScore}}-{{fixture?.intAwayScore}}</span></h5>
+          <h5><span class="rounded-0" *ngIf="fixture?.intHomeScore == null">{{fixture?.strLocaleTime}} </span></h5>
         </div>
+        <!-- Fixture time and/or score-->
 
-        <div class="fixture text-right">
-          
-          <span class="mx-2">{{fixture.strAwayTeam}}</span><span><img src="../../../assets/img/clubs/{{fixture.idAwayTeam}}.png"></span> 
-
+        <!-- Away Team -->
+        <div class="fixture text-right">          
+          <span class="mx-2">{{fixture.strAwayTeam}}</span><span><img src="../../../assets/img/clubs/{{fixture.idAwayTeam}}.png"></span>
         </div>
+        <!-- Away Team -->
 
       </div>
-      <!-- <div class="d-flex justify-content-between">
-        <span>Home</span>
-        <span>Away</span>
-      </div> -->
+      <!-- Fixture details END -->
+
+    <!-- Collapsible content START-->
+     <div class="collapse container my-4" id="{{fixture?.idEvent}}" data-parent="#accordion2" >
+
+        <!-- Spinner START -->
+        <div class="row spinner" *ngIf="collapseSpinner">
+
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <h1><i class="fas fa-spinner fa-spin"></i></h1>
+          </div>
+
+        </div>
+        <!-- Spinner END -->
+
+        <!-- Collapsible Details START -->
+        <div class="row collapsible-row" *ngIf="!collapseSpinner">
+
+          <!-- Home team recent matches START -->
+          <div class="col-md-4 col-sm-12 home text-center ">
+
+            <h6 class="text-muted">{{fixture?.strHomeTeam}} - Recent matches</h6>
+            
+            <div class="recent-matches" *ngFor="let lastMatch of homeRecentMatches">
+
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+            </div>
+
+          </div>
+          <!-- Home team recent matches END -->
+
+          <!-- Last Meeting START -->
+          <div class="col-md-4 col-sm-12 h-to-h text-center">
+
+            <h6 class="text-muted">Last Meeting </h6>
+
+            <span class="text-muted small">{{selectedFixture?.dateEvent}}</span>
+
+            <div class="match">
+              
+              <ul class="list-group">
+
+                <li class="list-group-item p-2">
+                  
+                  <span class="mx-2">{{_dataService.teams[fixture.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{selectedFixture?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                  <span class="rounded-0 mx-4">{{selectedFixture?.intHomeScore}}-{{selectedFixture?.intAwayScore}}</span> <!-- Their scores-->
+                  <span class="fixture-img"><img src="../../../assets/img/clubs/{{selectedFixture?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[fixture.idAwayTeam]}}</span> <!-- Away teams short name-->
+                  
+                </li>
+
+              </ul>
+
+            </div>
+
+            <div class="positions">
+
+                <h6 class="text-muted">League Position</h6>
+                
+                 <table>
+                   <thead>
+                     <tr>
+                       <th>Pos</th>
+                       <th class="club">Club</th>
+                       <th>Pl</th>
+                       <th>GD</th>
+                       <th>Pts</th>
+                     </tr>
+                   </thead>
+                   <tbody *ngIf="teamPositions">
+                     <tr>
+                       <td>{{teamPositions[0].pos}}</td>
+                       <td class="club"><span><img src="../../../assets/img/clubs/{{teamPositions[0].teamid}}.png"></span> {{_dataService.teams[teamPositions[0].teamid]}}</td>
+                       <td>{{teamPositions[0].played}}</td>
+                       <td>{{teamPositions[0].goalsdifference}}</td>
+                       <td>{{teamPositions[0].total}} </td>
+                     </tr>
+                     <tr>
+                        <td>{{teamPositions[1].pos}}</td>
+                        <td class="club"><span><img src="../../../assets/img/clubs/{{teamPositions[1].teamid}}.png"></span> {{_dataService.teams[teamPositions[1].teamid]}}</td>
+                        <td>{{teamPositions[1].played}}</td>
+                        <td>{{teamPositions[1].goalsdifference}}</td>
+                        <td>{{teamPositions[1].total}} </td>
+                      </tr>
+                   </tbody>
+                 </table>
+    
+                </div>
+                
+
+          </div>
+          <!-- Last Meeting END -->
+
+          <!-- Away team recent matches START -->
+          <div class="col-md-4 col-sm-12 away text-center">
+          
+            <h6 class="text-muted">{{fixture?.strAwayTeam}} - Recent matches</h6>
+
+            <div class="recent-matches" *ngFor="let lastMatch of awayRecentMatches">
+
+                <p class="text-muted small">{{lastMatch?.dateEvent}}</p>
+  
+                <ul class="list-group">
+  
+                  <li class="list-group-item p-2">
+                        
+                    <span class="mx-2">{{_dataService.teams[lastMatch?.idHomeTeam]}}</span><span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idHomeTeam}}.png"></span><!-- Home teams Short name-->
+                    <span class="rounded-0 mx-4">{{lastMatch?.intHomeScore}}-{{lastMatch?.intAwayScore}}</span> <!-- Their scores-->
+                    <span class="fixture-img"><img src="../../../assets/img/clubs/{{lastMatch?.idAwayTeam}}.png"></span><span class="mx-2">{{_dataService.teams[lastMatch?.idAwayTeam]}}</span> <!-- Away teams short name-->
+                        
+                  </li>
+      
+                </ul>
+  
+            </div>
+
+          </div>
+          <!-- Away team  recent matches END -->
+
+        </div>
+        <!-- Collapsible Details END -->
+
+   </div>
+   <!-- Collapsible content END -->
+
     </li>
+
   </ul>
+  <!-- Next gameweek fixtures list END -->
 
 </div>
