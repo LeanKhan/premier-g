@@ -1,3 +1,6 @@
+# 2021 UPDATE: archived, might delete soon :shrug:
+I didn't go far on his at all. lost interest or something. Wathc out for more football related stuff soon sha :)
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.0.
